@@ -8,10 +8,10 @@ namespace TestePedidoEletronico.Infra
 {
     public interface ITabelaFipeService
     {
-        Task<IEnumerable<MarcaViewModel>> ObterMarcas(string marca);
-        Task<IEnumerable<ModeloViewModel>> ObterModelos(string marca, int codigoMarca);
-        Task<IEnumerable<AnoViewModel>> ObterModelosPorAno(string marca, int codigoMarca, int codigoModelo);
-        Task<TabelaFipeViewModel> ObterPreco(string marca, int codigoMarca, int codigoModelo, string codigoAno);
+        Task<IEnumerable<MarcaViewModel>> ObterMarcas(string tipoVeiculo);
+        Task<IEnumerable<ModeloViewModel>> ObterModelos(string tipoVeiculo, int codigoMarca);
+        Task<IEnumerable<AnoViewModel>> ObterModelosPorAno(string tipoVeiculo, int codigoMarca, int codigoModelo);
+        Task<TabelaFipeViewModel> ObterPreco(string tipoVeiculo, int codigoMarca, int codigoModelo, string codigoAno);
 
     }
 }

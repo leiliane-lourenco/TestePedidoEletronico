@@ -22,7 +22,7 @@ namespace TestePedidoEletronico.Services
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            _baseUrl = configuration.GetSection("BaseUrl").Value;
+            _baseUrl = configuration.GetSection("BaseUrl").Value;            
         }
 
         private HttpClient ObterHttpClient()//metodo config acesso web
@@ -33,11 +33,11 @@ namespace TestePedidoEletronico.Services
             };
             return _httpClient;
         }
-        public async Task<IEnumerable<MarcaViewModel>> ObterMarcas(string marca)
+        public async Task<IEnumerable<MarcaViewModel>> ObterMarcas(string tipoVeiculo)
         {
             using (var httpClient = ObterHttpClient())
             {
-                var serviceUrl = $"{marca}/marcas";
+                var serviceUrl = $"{tipoVeiculo}/marcas";
                 var response = await httpClient.GetAsync($"{serviceUrl}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -48,11 +48,11 @@ namespace TestePedidoEletronico.Services
             }
             return new List<MarcaViewModel>();
         }
-        public async Task<IEnumerable<ModeloViewModel>> ObterModelos(string marca, int codigoMarca)
+        public async Task<IEnumerable<ModeloViewModel>> ObterModelos(string tipoVeiculo, int codigoMarca)
         {
             using (var httpClient = ObterHttpClient())
             {
-                var serviceUrl = $"{marca}/marcas/{codigoMarca}/modelos";
+                var serviceUrl = $"{tipoVeiculo}/marcas/{codigoMarca}/modelos";
                 var response = await httpClient.GetAsync($"{serviceUrl}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -65,11 +65,11 @@ namespace TestePedidoEletronico.Services
             return new List<ModeloViewModel>();
         }
 
-        public async Task<IEnumerable<AnoViewModel>> ObterModelosPorAno(string marca, int codigoMarca, int codigoModelo)
+        public async Task<IEnumerable<AnoViewModel>> ObterModelosPorAno(string tipoVeiculo, int codigoMarca, int codigoModelo)
         {
             using (var httpClient = ObterHttpClient())
             {
-                var serviceUrl = $"{marca}/marcas/{codigoMarca}/modelos/{codigoModelo}/anos";
+                var serviceUrl = $"{tipoVeiculo}/marcas/{codigoMarca}/modelos/{codigoModelo}/anos";
                 var response = await httpClient.GetAsync($"{serviceUrl}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -82,11 +82,11 @@ namespace TestePedidoEletronico.Services
             return new List<AnoViewModel>();
         }
 
-        public async Task<TabelaFipeViewModel> ObterPreco(string marca, int codigoMarca, int codigoModelo, string codigoAno)
+        public async Task<TabelaFipeViewModel> ObterPreco(string tipoVeiculo, int codigoMarca, int codigoModelo, string codigoAno)
         {
             using (var httpcliente = ObterHttpClient())
             {
-                var serviceUrl = $"{marca}/marcas/{codigoMarca}/modelos/{codigoModelo}/anos/{codigoAno}";
+                var serviceUrl = $"{tipoVeiculo}/marcas/{codigoMarca}/modelos/{codigoModelo}/anos/{codigoAno}";
                 var response = await httpcliente.GetAsync($"{serviceUrl}");
                 if (true)
                 {
