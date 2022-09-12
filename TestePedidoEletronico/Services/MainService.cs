@@ -4,18 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestePedidoEletronico.Infra;
+using TestePedidoEletronico.Interfaces;
 using TestePedidoEletronico.ViewModel;
 
 namespace TestePedidoEletronico.Services
 {
-    public class StartService 
+    public class MainService : IMainService
     {
-        private static IServiceProvider _provider = InjecaoDependencia.Registrar();
+      
         private readonly ITabelaFipeService _tabelaFipeService;
+
+        public MainService(ITabelaFipeService tabelaFipeService)
+        {
+            _tabelaFipeService = tabelaFipeService;
+        }
 
         public async Task<IEnumerable<MarcaViewModel>> ObterMarcas(string tipoVeiculo)
         {
-            var _tabelaFipeService = _provider.GetRequiredService<ITabelaFipeService>();
+           
 
             var marcasTipoVeiculo = await _tabelaFipeService.ObterMarcas(tipoVeiculo);
 
@@ -30,7 +36,7 @@ namespace TestePedidoEletronico.Services
 
         public async Task<IEnumerable<ModeloViewModel>> ObterModelos(string tipoVeiculo, int codigoMarca)
         {
-            var _tabelaFipeService = _provider.GetRequiredService<ITabelaFipeService>();
+           
 
             var modelosView = await _tabelaFipeService.ObterModelos(tipoVeiculo, codigoMarca);
 
@@ -44,7 +50,7 @@ namespace TestePedidoEletronico.Services
 
         public async Task<IEnumerable<AnoViewModel>> ObterModelosPorAno(string tipoVeiculo, int codigoMarca, int codigoModelo)
         {
-            var _tabelaFipeService = _provider.GetRequiredService<ITabelaFipeService>();
+         
 
             var anoECombustivelModeloView = await _tabelaFipeService.ObterModelosPorAno(tipoVeiculo, codigoMarca, codigoModelo);
 
@@ -61,7 +67,7 @@ namespace TestePedidoEletronico.Services
             Console.WriteLine();
 
             var codigoAno = Console.ReadLine();
-             var _tabelaFipeService = _provider.GetRequiredService<ITabelaFipeService>();
+          
 
             var dadosVeiculo = await _tabelaFipeService.ObterPreco(tipoVeiculo, codigoMarca, codigoModelo, codigoAno);
 

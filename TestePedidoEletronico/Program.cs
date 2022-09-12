@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
 using TestePedidoEletronico.Infra;
+using TestePedidoEletronico.Interfaces;
 using TestePedidoEletronico.Services;
 using TestePedidoEletronico.ViewModel.Enum;
 
 namespace TestePedidoEletronico
 {
+    
     class Program
     {
+        private static IServiceProvider _serviceProvider = InjecaoDependencia.Registrar();
 
         public static async Task Main(string[] args)
         {
@@ -21,10 +25,11 @@ namespace TestePedidoEletronico
 
             var codigoTipoVeiculo = Convert.ToInt32(Console.ReadLine());
 
-            var tipoVeiculo = ((TipoVeiculoEnum)codigoTipoVeiculo).ToString();
+            var tipoVeiculo = ((TipoVeiculoEnum)codigoTipoVeiculo).ToString();           
 
-            MainService serviceMarca = new MainService();
-           await  serviceMarca.ObterMarcas(tipoVeiculo);
+            var mainService = _serviceProvider.GetRequiredService<IMainService>();
+
+            await  mainService.ObterMarcas(tipoVeiculo);
 
             //=================== SELECIONA MARCA DO VEICULO PARA  RETORNA MODELOS =============================
 
@@ -32,9 +37,8 @@ namespace TestePedidoEletronico
             Console.WriteLine();
 
             var codigoMarca = Convert.ToInt32(Console.ReadLine());
-
-            MainService serviceModelo = new MainService();
-            await serviceModelo.ObterModelos(tipoVeiculo, codigoMarca);
+           
+            await mainService.ObterModelos(tipoVeiculo, codigoMarca);
 
             // =================== SELECIONA MODELO DA MARCA ESCOLHIDA PARA RETORNA ANOS DOS MODELOS ===============
 
@@ -43,12 +47,11 @@ namespace TestePedidoEletronico
 
             var codigoModelo = Convert.ToInt32(Console.ReadLine());
 
-            MainService serviceAno = new MainService();
-            await serviceAno.ObterModelosPorAno(tipoVeiculo, codigoMarca, codigoModelo);
+            await mainService.ObterModelosPorAno(tipoVeiculo, codigoMarca, codigoModelo);
 
             // ======================== SELECIONA ANO MODELO PARA RETORNA PREÇO =============
-            MainService servicePreco = new MainService();
-            await servicePreco.ObterPreco(tipoVeiculo, codigoMarca, codigoModelo);
+          
+            await mainService.ObterPreco(tipoVeiculo, codigoMarca, codigoModelo);
 
         }
         

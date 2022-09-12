@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using TestePedidoEletronico.Interfaces;
 using TestePedidoEletronico.Services;
 
 namespace TestePedidoEletronico.Infra
@@ -11,6 +12,8 @@ namespace TestePedidoEletronico.Infra
             var services = new ServiceCollection();
 
             services.AddScoped<ITabelaFipeService, TabelaFipeService>();
+
+            services.AddScoped<IMainService, MainService>();
 
             return services.BuildServiceProvider();
         }
